@@ -1,25 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import React from 'react';
+import { Link, Route, Switch ,  BrowserRouter as Router} from 'react-router-dom';
+import Home from './module/Home';
+import Secret from './module/Secret';
+import Login from './module/Login';
+/**'/secret' route to only be accessible if the requesting client has a valid token. */
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/secret">Secret</Link></li>
+          <li><Link to="/login">Login</Link></li>
+        </ul>        
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/secret" component={Secret} />
+          <Route path="/login" component={Login} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
