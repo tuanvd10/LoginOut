@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+//axios.defaults.withCredentials = true
+
 export default class Secret extends Component {
     constructor() {
       super();
@@ -11,7 +13,9 @@ export default class Secret extends Component {
     }  
     
     componentDidMount() {
-        axios.get('http://192.168.0.101:9090/api/secret')
+        axios.get('http://192.168.0.101:9090/api/secret', {
+            withCredentials: true
+          })
             .then((res) => {
                 console.log(res);
                 this.setState({message: res.data});

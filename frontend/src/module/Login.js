@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+//axios.defaults.withCredentials = true
+
 export default class Login extends Component {
     constructor(props) {
         super(props)
@@ -20,7 +22,9 @@ export default class Login extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://192.168.0.101:9090/api/authenticate', this.state)
+        axios.post('http://192.168.0.101:9090/api/authenticate', this.state, {
+            withCredentials: true
+          })
             .then((res) => {
                 console.log("response: " + JSON.stringify(res));
                 if (res.status === 200) {
