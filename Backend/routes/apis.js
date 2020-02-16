@@ -6,6 +6,20 @@ const withAuth = require('../middleware/middleware');
 
 var router = express.Router();
 const secret = 'mysecretsshhh';
+//Route for adding cookie 
+router.get('/setdata', (req, res)=>{ 
+    res.cookie("userData", 123455); 
+    res.send('user data added to cookie'); 
+}); 
+
+router.get('/clearcookie', function (req, res) {
+    res.clearCookie();
+    res.send("done");
+});
+
+router.get('/getdata', function (req, res) {
+    res.send(req.cookies);
+});
 
 router.get('/home', function (req, res) {
     res.send('Welcome!');
@@ -47,12 +61,17 @@ router.post('/authenticate', function (req, res) {
                 // Issue token
                 const payload = { email };
                 const token = jwt.sign(payload, secret, {
-                    expiresIn: "1h"
+                    expiresIn: 120
                 });
-                res.status(200).cookie('token', token, { maxAge: 90000, httpOnly: false });
+                res.cookie('token', token, {
+                    maxAge: 90000,
+                    secure: false, // set to true if your using https
+                    httpOnly: true 
+                });
+                res.status(200);
                 res.send("Login success");
                 //console.log(JSON.stringify(res));
-                console.log("Login success");
+                console.log(token);
             }
         });
     } else {
